@@ -16,16 +16,11 @@ describe('Task API', () =>{
         /**
      * Test the POST Route
      */
-         describe('POST /api/v1/user/login', () =>{
-            var user = {
-                email: 'apitesuser@yopmail.com',
-                password: '@roose50'
-            };
-    
+         describe('POST /api/v1/user/login', () =>{    
             it('should logged user', (done) =>{
                 chai.request('http://localhost:3000')
                 .post('/api/v1/user/login')
-                .send({userId: 1, email: 'apitesuser@yopmail.com', password: '@roose50' })
+                .send({email: 'example@domain.com', password: 'password' })
                 .end((err, response) =>{
                     console.log("token: " +response.body.token);
                     token = response.body.token
