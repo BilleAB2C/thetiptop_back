@@ -8,6 +8,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      gender: {
+        type: Sequelize.ENUM,
+        values: [
+          'monsieur',
+          'madame'
+        ],
+        defaultValue: 'monsieur'
+      },
       first_name: {
         allowNull: false,
         type: Sequelize.STRING
@@ -74,6 +82,14 @@ module.exports = {
       rememberToken: {
           allowNull: true,
           type: Sequelize.STRING
+      },
+      optin: { 
+        type: Sequelize.ENUM,
+        values: [
+          'yes',
+          'no'
+        ],
+        defaultValue: 'no'
       }
     });
   },

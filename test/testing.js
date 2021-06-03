@@ -13,10 +13,10 @@ chai.use(chaiHttp);
 
 describe('Task API', () =>{
 
-        /**
-     * Test the POST Route
+    /**
+     * Test the POST Route (login)
      */
-         describe('POST /api/v1/user/login', () =>{    
+/*          describe('POST /api/v1/user/login', () =>{    
             it('should logged user', (done) =>{
                 chai.request('http://localhost:3000')
                 .post('/api/v1/user/login')
@@ -42,13 +42,58 @@ describe('Task API', () =>{
                     done();
                 })
             })
-        })
+        }) */
+
+
+     /**
+     * Test the POST Route (register) method
+     */
+                 describe('POST /api/v1/user/register', () =>{    
+                    it('should SIGN UP user', (done) =>{
+                        chai.request('http://localhost:3000')
+                        .post('/api/v1/user/register')
+                        .send({
+                            gender: "madame",
+                            nom: "testMocha",
+                            prenom: "test_mocha",
+                            email: 'test_mocha@domain.com',
+                            password: '@password1',
+                            //password_confirm: '@password1',
+                            address: "madame",
+                            zipCode: "madame",
+                            city: "madame",
+                            optin: "madame"
+                         })
+                        .end((err, response) =>{
+                            response.text.should.be.eq(response.text);
+                            console.log("::::::::::::::::::")
+                            response.should.have.status(201);    
+                            expect('/api/v1/user/register').to.throw(Error);                        
+                            response.text.should.be.eq("un mail de confirmation vous a été envoyé afin de valider votre compte à l'adresse : " + email);
+                            done();
+                        })
+                    })
+        
+                    it('It should NOT SIGN UP user', (done) =>{
+                        chai.request('http://localhost:3000')
+                        .post('/api/v1/user/register')
+                        .end((err, response) =>{
+                            if(err){
+                            expect('/api/v1/user/register').to.throw(Error);
+                            response.should.have.status(400);
+                            response.text.should.be.eq(response.text);
+                            }
+         
+                            done();
+                        })
+                    })
+                })
     
 
     /**
      * Test the Get Route
      */
-    describe('GET /api/v1/admin/users', () =>{
+/*     describe('GET /api/v1/admin/users', () =>{
         it('should GET all users', (done) =>{
             console.log(token)
 
@@ -75,7 +120,7 @@ describe('Task API', () =>{
                 done();
             })
         })
-    })
+    }) */
 
 
 

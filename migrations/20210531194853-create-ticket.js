@@ -9,12 +9,16 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userId: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.INTEGER,
         references: {
             model: 'Users',
             key: 'id'
         }
+      },
+      adminId: {
+        allowNull: false,
+        type: Sequelize.INTEGER
       },
       gain: {
         allowNull: false,
@@ -34,6 +38,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       magasin: {
+        allowNull: true,
         type: Sequelize.STRING
       },
       validateAt: {

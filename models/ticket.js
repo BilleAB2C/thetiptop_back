@@ -11,15 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-        models.Ticket.belongsTo(models.User, {
-            foreignKey: {
-                allowNull: false
-            }
-        })
+      models.Ticket.belongsTo(models.User, {
+        foreignKey: {
+            allowNull: false
+        }
+    })
     }
   };
-  Ticket.init({
-    userId:DataTypes.STRING,
+  Ticket.init({    
+    adminId: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
     gain: DataTypes.STRING,
     etat: DataTypes.ENUM('distribue', 'valide', 'non-distribue'),
     code: DataTypes.STRING,

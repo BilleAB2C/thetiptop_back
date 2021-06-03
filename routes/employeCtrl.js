@@ -197,7 +197,7 @@ module.exports = {
                     models.Ticket.findAll({
                         attributes: [
                           'gain',
-                          [Sequelize.fn('COUNT', Sequelize.col('gain')), 'gangné']
+                          [Sequelize.fn('COUNT', Sequelize.col('gain')), 'gagné']
                         ],
                         group: 'gain',
                         where: { etat: 'valide' },

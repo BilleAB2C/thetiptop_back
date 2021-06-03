@@ -15,6 +15,7 @@ const { randomCode } = require('../funcs/functions');
 // Routers
 module.exports = {
     register: function(req, res) {
+        let gender = req.body.gender
         let nom = req.body.nom
         let prenom = req.body.prenom
         let email = req.body.email
@@ -23,6 +24,7 @@ module.exports = {
         let address = req.body.address
         let zipCode = req.body.zipCode
         let city = req.body.city
+        let optin = req.body.optin
         let token = randomCode(60, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
 
         if (nom == null || prenom == null || email == null || password == null || address == null || zipCode == null || city == null) {
@@ -31,6 +33,10 @@ module.exports = {
 
         if (nom.length >= 20 || nom.length <= 4) {
             return res.status(400).json({ 'error': 'wrong first name (must be length 5 - 12)' });
+        }
+
+        if (gender != null && gender != "madame") {
+            return res.status(400).json({ 'error': 'Gender INVALID (must be (monsieur) - (madame))' });
         }
 
         if (prenom.length >= 20 || prenom.length <= 4) {
@@ -42,7 +48,7 @@ module.exports = {
         }
 
         if (!checkPassword(password)) {
-            return res.status(400).json({ 'error': 'password invalid (Min 1 special character - Min 1 number. - Min 8 characters or More)' });
+            return res.status(304).json({ 'error': 'password invalid (Min 1 special character - Min 1 number. - Min 8 characters or More)' });
         }
 
         if(password !== password_confirm) {
@@ -68,11 +74,12 @@ module.exports = {
                         done(null, userFound, bcryptedPassword);
                     });
                 } else {
-                    return res.status(409).json({ 'error': 'user already exist' });
+                    return res.status(409).json({'error': 'user already exist'});
                 }
             },
             function(userFound, bcryptedPassword, done) {
                 let newUser = models.User.create({
+                        gender:gender,
                         last_name: nom,
                         first_name: prenom,
                         email: email,
@@ -80,7 +87,8 @@ module.exports = {
                         address: address,
                         zipCode:zipCode,
                         city:city,
-                        confirmationToken: token
+                        confirmationToken: token,
+                        optin: optin
 
                     })
                     .then(function(newUser) {
@@ -92,7 +100,7 @@ module.exports = {
             }
         ], function(newUser) {
             if (newUser) {
-                sendConfirmationEmail(newUser.email, newUser.last_name, newUser.id, 'http://localhost:3000'+ config.rootAPI, token)
+                sendConfirmationEmail(newUser.email, newUser.last_name, newUser.id, 'http://localhost:4200/'+ config.rootAPI, token)
                 return res.status(201).json({
                     'msg': 'un mail de confirmation vous a été envoyé afin de valider votre compte à l\'adresse : ' + newUser.email
                 });
@@ -188,6 +196,7 @@ module.exports = {
                 return res.status(200).json({
                     'userId': userFound.id,
                     'email': userFound.email,
+                    'role': userFound.role,
                     'token': jwtUtils.generateTokenForUser(userFound)
                 });
             } else {
@@ -282,7 +291,7 @@ module.exports = {
                         resetAt: new Date(Date.now()),
                         expiredAt: new Date(Date.now() + (60 * 60 * 1000))
                     }).then(function(userFound) {
-                        sendResetPasswordEmail(userFound.email, userFound.username, 'http://localhost:3000'+ config.rootAPI, userFound.id, resetToken)
+                        sendResetPasswordEmail(userFound.email, userFound.username, 'http://localhost:4200/'+ config.rootAPI, userFound.id, resetToken)
                         done(userFound);
                     }).catch(function(err) {
                         res.status(500).json({ 'error': 'cannot update user password.' });

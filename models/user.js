@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
+    gender: DataTypes.ENUM('monsieur', 'madame'),
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
     email: DataTypes.STRING,
@@ -28,7 +29,8 @@ module.exports = (sequelize, DataTypes) => {
     resetToken: DataTypes.STRING,
     resetAt: DataTypes.DATE,
     expiredAt: DataTypes.DATE,
-    rememberToken: DataTypes.STRING
+    rememberToken: DataTypes.STRING,
+    optin: DataTypes.ENUM('yes', 'no')
   }, {
     sequelize,
     modelName: 'User',

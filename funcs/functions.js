@@ -34,7 +34,7 @@ exports.corsOptionsDelegate = function(req, callback) {
     } else {
         console.log("testet" + allowlist.indexOf(req.header('Origin')))
         corsOptions = { origin: false } // disable CORS for this request
-        console.log("testet : " + corsOptions.origin)
+        //console.log("testet : " + corsOptions.origin)
     }
     callback(null, corsOptions) // callback expects two parameters: error and options
 }
@@ -51,7 +51,7 @@ exports.sendConfirmationEmail = function(toUser, toUserName, newUserId, domain, 
         <p>&nbsp;</p>
         <p style="text-align: center;">If that doesn't work, copy and paste the following link in your browser<br />If you have any questions, just reply to this email—we're always happy to help out</p>
         <p style="text-align: center;">Please copy YOUR KEY: <strong style="font-size:16px;">${tokenRandom}</strong>  and validate your account.</p>
-        <p style="text-align: center;"><a style="background: orange; color: #ffffff; padding: 10px 50px; border-radius: 3px;" href="${domain}/user/mailValidation/${newUserId}">confirm account</a></p>
+        <p style="text-align: center;"><a style="background: orange; color: #ffffff; padding: 10px 50px; border-radius: 3px;" href="${domain}/validation/${newUserId}">confirm account</a></p>
         <p style="text-align: center;">&nbsp;</p>
         <p style="text-align: center; font-size: 10px;"><code>Trip Builder Pro is a registered business name of Trip Builder Pro England Limited.</code><br /><code>Registered in London as a private limited company, Company Number 4777441</code><br /><code>registered Office: Wilton Plaza, Wilton Place, London</code></p>
         <p>&nbsp;</p>`,
@@ -74,7 +74,7 @@ exports.sendResetPasswordEmail = function(toUser, toUserName, domain, newUserId,
         <p>&nbsp;</p>
         <p style="text-align: center;">If that doesn't work, copy and paste the following link in your browser<br />If you have any questions, just reply to this email—we're always happy to help out</p>
         <p style="text-align: center;">&nbsp;</p>
-        <p style="text-align: center;"><a style="background: orange; color: #ffffff; padding: 10px 50px; border-radius: 3px;" href="${domain}/user/restpwd/${newUserId}/${resetToken}">modifier mon mot de passe.</a></p>
+        <p style="text-align: center;"><a style="background: orange; color: #ffffff; padding: 10px 50px; border-radius: 3px;" href="${domain}/reinit_password/${newUserId}/${resetToken}">modifier mon mot de passe.</a></p>
         <p style="text-align: center;">&nbsp;</p>
         <p style="text-align: center; font-size: 10px;"><code>Trip Builder Pro is a registered business name of Trip Builder Pro England Limited.</code><br /><code>Registered in London as a private limited company, Company Number 4777441</code><br /><code>registered Office: Wilton Plaza, Wilton Place, London</code></p>
         <p>&nbsp;</p>`,
