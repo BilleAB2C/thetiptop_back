@@ -242,7 +242,7 @@ module.exports = {
     // Getting auth header
     let headerAuth = req.headers["authorization"];
     let userId = jwtUtils.getUserId(headerAuth);
-    let buyer = req.body.id;
+    let buyer = req.body.buyer;
 
     if (userId <= 0) {
       return res.status(400).json({ error: "missing parameters" });
@@ -287,7 +287,7 @@ module.exports = {
                   buyer +
                   "€ plus de " +
                   (49 - buyer) +
-                  "€ et vous pouvez gagner un lot",
+                  "€ et vous pouvez gagner un lot...",
               });
             }
           } else {
