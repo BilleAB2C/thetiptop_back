@@ -2,8 +2,6 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../server');
 let apiRouter = require('../apiRouter').router
-//let cors = require('cors')
-//const corsOptions = require('./funcs/functions')
 let config = require('../config/config')
 let token;
 
@@ -16,11 +14,11 @@ describe('Task API', () =>{
     /**
      * Test the POST Route (login)
      */
-/*          describe('POST /api/v1/user/login', () =>{    
+         describe('POST /api/v1/user/login', () =>{    
             it('should logged user', (done) =>{
                 chai.request('http://localhost:3000')
                 .post('/api/v1/user/login')
-                .send({email: 'example@domain.com', password: 'password' })
+                .send({email: 'sequelize3@yopmail.com', password: '@roose509' })
                 .end((err, response) =>{
                     console.log("token: " +response.body.token);
                     token = response.body.token
@@ -42,13 +40,13 @@ describe('Task API', () =>{
                     done();
                 })
             })
-        }) */
+        })
 
 
      /**
      * Test the POST Route (register) method
      */
-                 describe('POST /api/v1/user/register', () =>{    
+/*                  describe('POST /api/v1/user/register', () =>{    
                     it('should SIGN UP user', (done) =>{
                         chai.request('http://localhost:3000')
                         .post('/api/v1/user/register')
@@ -58,7 +56,7 @@ describe('Task API', () =>{
                             prenom: "test_mocha",
                             email: 'test_mocha@domain.com',
                             password: '@password1',
-                            //password_confirm: '@password1',
+                            password_confirm: '@password1',
                             address: "madame",
                             zipCode: "madame",
                             city: "madame",
@@ -87,7 +85,7 @@ describe('Task API', () =>{
                             done();
                         })
                     })
-                })
+                }) */
     
 
     /**

@@ -25,7 +25,8 @@ exports.router = (function() {
     apiRouter.route('/user/admin/:email', cors(corsOption.corsOptionsDelegate)).delete(usersCtrl.destroyUserProfileByAdmin);
     apiRouter.route('/employe/admin/:email', cors(corsOption.corsOptionsDelegate)).delete(usersCtrl.destroyEmployeProfileByAdmin);
     apiRouter.route('/admin/users', cors(corsOption.corsOptionsDelegate)).get(usersCtrl.listUsers);
-    apiRouter.route('/admin/employe/new', cors(corsOption.corsOptionsDelegate)).post(usersCtrl.createEmploye);
+    apiRouter.route('/admin/employees', cors(corsOption.corsOptionsDelegate)).get(usersCtrl.EmployeesList);
+    apiRouter.route('/admin/employe/new', cors(corsOption.corsOptionsDelegate)).post(usersCtrl.createEmployee);
     apiRouter.route('/user/admin/:email', cors(corsOption.corsOptionsDelegate)).get(usersCtrl.getUserByEmail);
     apiRouter.route('/user/admin/employe/:email', cors(corsOption.corsOptionsDelegate)).get(usersCtrl.getEmployeByEmail);
     apiRouter.route('/user/employe/:email', cors(corsOption.corsOptionsDelegate)).get(usersCtrl.getUserByEmailFromEmploye);

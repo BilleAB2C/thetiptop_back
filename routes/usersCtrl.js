@@ -875,41 +875,10 @@ module.exports = {
                 }
             });
     },
-    createEmploye: function(req, res) {
+    createEmployee: function(req, res) {
         // Getting auth header
         var headerAuth = req.headers['authorization'];
-        var userId = jwtUtils.getUserId(headerAuth);
-
-        let nom = req.body.nom
-        let prenom = req.body.prenom
-        let email = req.body.email
-        let password = req.body.password
-        let password_confirm = req.body.password_confirm
-        let magasin = req.body.magasin
-
-        if (nom == null || prenom == null || email == null || password == null || magasin == null) {
-            return res.status(400).json({ 'error': 'all fields must be filled in.' });
-        }
-
-        if (nom.length >= 20 || nom.length <= 4) {
-            return res.status(400).json({ 'error': 'wrong first name (must be length 5 - 12)' });
-        }
-
-        if (prenom.length >= 20 || prenom.length <= 4) {
-            return res.status(400).json({ 'error': 'wrong last name (must be length 5 - 12)' });
-        }
-
-        if (!validator.validate(email)) {
-            return res.status(400).json({ 'error': 'email is not valid' });
-        }
-
-        if (!checkPassword(password)) {
-            return res.status(400).json({ 'error': 'password invalid (Min 1 special character - Min 1 number. - Min 8 characters or More)' });
-        }
-
-        if(password !== password_confirm) {
-            return res.status(400).json({ 'error': 'passwords do not match.' });
-        }
+        var userId = jwtUtils.getUserId(headerAuth)
 
         if (userId <= 0) {
             return res.status(400).json({ 'error': 'missing token' });
@@ -928,10 +897,7 @@ module.exports = {
             },
             function(userAdmin, done) {
                 if (userAdmin){
-                       models.Employe.findOne({
-                        attributes: ['email'],
-                        where: { email: email }
-                    })
+                       models.Employe.findAll({})
                     .then(function(userFound) {
                         done(null, userFound);
                     })
@@ -974,6 +940,35 @@ module.exports = {
             } else {
                 return res.status(500).json({ 'error': 'cannot add user' });
             }
+        });
+    },
+    EmployeesList: function(req, res) {
+        // Getting auth header
+        var headerAuth = req.headers['authorization'];
+        var userId = jwtUtils.getUserId(headerAuth);
+
+        if (userId <= 0) {
+            return res.status(400).json({ 'error': 'missing parameters' });
+        }
+        models.User.findOne({
+            where: { id: userId, role: 'admin'}
+        }).then(function(user) {
+            if (user) {
+                models.Employe.findAll({
+
+                }).then(function(employee) {
+                    if (employee) {
+                        res.status(200).json(employee);
+                    }
+                }).catch(function(err) {
+                    res.status(500).json({ 'error': 'cannot fetch user' });
+                });
+            } else {
+                res.status(404).json({ 'error': 'Accès non autorisé.' });
+            }
+
+        }).catch(function(err) {
+            res.status(500).json({ 'error': 'cannot fetch user' });
         });
     }
 }
