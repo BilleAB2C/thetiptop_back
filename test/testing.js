@@ -6,23 +6,22 @@ let config = require("../config/config");
 let token;
 
 var expect = require("chai").expect;
-//var request = require("request");
 var should = require("should"),
   assert = require("assert"),
-  request = require("supertest")("http://localhost:3000/"),
+  request = require("supertest")(`${process.env.URL}:3000`),
   superagent = require("superagent");
 
 describe("User Logged", function () {
   it("should return status OK (200)", function (done) {
     request
-      .post("api/v1/user/login")
+      .post(`${config.rootAPI}user/login`)
       .type("form")
       .send({ email: "sequelize3@yopmail.com", password: "@roose509" })
       .end(function (err, res) {
         if (err) {
           throw err;
         }
-        token = res.body.token
+        token = res.body.token;
         assert.ok(res);
         assert.ok(res.body);
         assert.ok(res.status, 200);
@@ -35,11 +34,12 @@ describe("User Logged", function () {
    * Test the Get Route
    */
   describe("GET all TICKETS for the User", () => {
-    it("should GET all users", (done) => {
+    it("should GET all tickets", (done) => {
       request
-        .get("api/v1/user/tickets/")
+        .get(`${config.rootAPI}user/tickets`)
         .set("Authorization", "Bearer " + token)
         .end((err, res) => {
+          assert(token !== undefined, "missing TOKEN");
           assert.ok(res.status, 200);
           assert(Array.isArray([]), "empty arrays or full arrays");
           done();
@@ -47,15 +47,15 @@ describe("User Logged", function () {
     });
 
     it("It should NOT GET all TICKETS for the User", (done) => {
-      request.get("api/v1/user/tickets/").end((err, response) => {
+      request.get(`${config.rootAPI}user/tickets`).end((err, response) => {
         if (err) {
-          response.should.have.status(400);
-          response.text.should.be.eq("Unable to fetch tickets");
+          throw err;
         }
+
+        assert.ok(response.text, "missing parameters");
+        assert.ok(response.status, 400);
         done();
       });
     });
   });
-
-
 });

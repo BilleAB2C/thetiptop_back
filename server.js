@@ -26,9 +26,11 @@ server.get(config.rootAPI, function(req, res){
 })
 
 server.use(config.rootAPI, apiRouter)
+//let apiRouter = express.Router();
 
 // launch server
 server.listen(3000, function(){
+    console.log(config.rootAPI)
     console.log(new Date().toLocaleString());
     console.log('Server en écoute');
 })
