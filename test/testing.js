@@ -11,8 +11,12 @@ var should = require("should"),
   request = require("supertest")(`${process.env.URL}:3000`),
   superagent = require("superagent");
 
-describe("User Logged", function () {
-  it("should return status OK (200)", function (done) {
+  /**
+   * test with DB
+   */
+
+//describe("User Logged", function () {
+/*   it("should return status OK (200)", function (done) {
     request
       .post(`${config.rootAPI}user/login`)
       .type("form")
@@ -29,11 +33,11 @@ describe("User Logged", function () {
         done();
       });
   });
-
+ */
   /**
    * Test the Get Route
    */
-  describe("GET all TICKETS for the User", () => {
+/*   describe("GET all TICKETS for the User", () => {
     it("should GET all tickets", (done) => {
       request
         .get(`${config.rootAPI}user/tickets`)
@@ -57,5 +61,38 @@ describe("User Logged", function () {
         done();
       });
     });
-  });
-});
+  }); */
+//});
+
+// basic test 
+
+var sum = require('./md5');
+var expect = require('chai').expect;
+
+describe('#sum()', function() {
+
+  context('without arguments', function() {
+    it('should return 0', function() {
+      expect(sum()).to.equal(0)
+    })
+  })
+  
+  context('with number arguments', function() {
+    it('should return sum of arguments', function() {
+      expect(sum(1, 2, 3, 4, 5)).to.equal(15)
+    })
+    
+    it('should return argument when only one argument is passed', function() {
+      expect(sum(5)).to.equal(5)
+    })
+  })
+  
+  context('with non-number arguments', function() {
+    it('should throw error', function() {
+      expect(function() {
+        sum(1, 2, '3', [4], 5)
+      }).to.throw(TypeError, 'sum() expects only numbers.')
+    })
+  })
+  
+})
