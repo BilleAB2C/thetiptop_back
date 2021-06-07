@@ -13,8 +13,7 @@ module.exports = {
         values: [
           'monsieur',
           'madame'
-        ],
-        defaultValue: 'monsieur'
+        ]
       },
       first_name: {
         allowNull: false,

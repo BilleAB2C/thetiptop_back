@@ -35,7 +35,7 @@ module.exports = {
             return res.status(400).json({ 'error': 'wrong first name (must be length 5 - 12)' });
         }
 
-        if (gender != null && gender != "madame") {
+        if (gender == null) {
             return res.status(400).json({ 'error': 'Gender INVALID (must be (monsieur) - (madame))' });
         }
 
