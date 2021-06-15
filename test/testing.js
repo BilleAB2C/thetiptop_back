@@ -1,3 +1,4 @@
+// import variables
 let chai = require("chai");
 let chaiHttp = require("chai-http");
 let server = require("../server");
@@ -143,7 +144,7 @@ describe("GET all Users", function () {
       .post(`${config.rootAPI}user/login`)
       .type("form")
       .send({
-        email: "sequelize5901@yopmail.com",
+        email: "rufodir@otnori.microsoft",
         password: "@roose509",
       })
       .end(function (err, res) {
