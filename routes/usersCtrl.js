@@ -70,12 +70,10 @@ module.exports = {
     }
 
     if (!checkPassword(password)) {
-      return res
-        .status(304)
-        .json({
-          error:
-            "password invalid (Min 1 special character - Min 1 number. - Min 8 characters or More)",
-        });
+      return res.status(304).json({
+        error:
+          "password invalid (Min 1 special character - Min 1 number. - Min 8 characters or More)",
+      });
     }
 
     if (password !== password_confirm) {
@@ -138,9 +136,10 @@ module.exports = {
             token
           );
           return res.status(201).json({
-            msg:
-              "un mail de confirmation vous a été envoyé afin de valider votre compte à l'adresse : " +
-              newUser.email,
+            msg: "un mail de confirmation vous a été envoyé afin de valider votre compte à l'adresse : ",
+            email: newUser.email,
+            token: newUser.confirmationToken,
+            id: newUser.id,
           });
         } else {
           return res.status(500).json({ error: "cannot add user" });
@@ -397,12 +396,10 @@ module.exports = {
     let password_confirm = req.body.password_confirm;
 
     if (!checkPassword(password)) {
-      return res
-        .status(400)
-        .json({
-          error:
-            "password invalid (must length 6 - 10 and include 1 number at least)",
-        });
+      return res.status(400).json({
+        error:
+          "password invalid (must length 6 - 10 and include 1 number at least)",
+      });
     }
     if (password_confirm != password) {
       return res.status(400).json({ error: "password do not match." });
@@ -1077,12 +1074,10 @@ module.exports = {
     }
 
     if (!checkPassword(password)) {
-      return res
-        .status(400)
-        .json({
-          error:
-            "password invalid (Min 1 special character - Min 1 number. - Min 8 characters or More)",
-        });
+      return res.status(400).json({
+        error:
+          "password invalid (Min 1 special character - Min 1 number. - Min 8 characters or More)",
+      });
     }
 
     if (password !== password_confirm) {

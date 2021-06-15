@@ -11,11 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Ticket.belongsTo(models.User, {
+ /*      models.Ticket.belongsTo(models.User, {
         foreignKey: {
             allowNull: false
         }
-    })
+    }) */
     }
   };
   Ticket.init({    
