@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     })
     }
   };
-  Ticket.init({    
+  Ticket.init({
     adminId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
     gain: DataTypes.STRING,
